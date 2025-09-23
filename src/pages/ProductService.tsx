@@ -25,7 +25,7 @@ import type {
     Producto,
     ProductoConHistorial,
     TipoItem
-} from "../types/product";
+} from "../types/ProductTypes.ts";
 
 
 type Data = ProductoConHistorial;

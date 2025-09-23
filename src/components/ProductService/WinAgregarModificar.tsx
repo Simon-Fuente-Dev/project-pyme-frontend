@@ -8,7 +8,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 
 import type {
     Producto
-} from "../../types/product.ts"
+} from "../../types/ProductTypes.ts"
 
 import {
     Button,
@@ -29,6 +29,7 @@ import {
 
 import ErrorDialog from "../Rehusable/ErrorDialog.tsx";
 
+import {ControlTextField} from "../Rehusable/TextField.tsx";
 
 type WinProps = {
     title: string;
@@ -136,17 +137,23 @@ const WinAgregarModificar = ({title, accion, productData, open, setOpen}: WinPro
                     <Box sx={{flexGrow: 1, padding: "0.5em"}}>
                         <Grid container spacing={2}>
                             <Grid size={4}>
-                                <TextField
-                                    label="Nombre del item"
-                                    fullWidth
-                                    {...register("nombre", {required: "El nombre es obligatorio"})}
+                                <ControlTextField<Producto>
+                                    name={"nombre"}
+                                    label={"Nombre del item"}
+                                    control={control}
+                                    rules = {{
+                                        required: "El nombre es obligatorio"
+                                    }}
                                 />
                             </Grid>
                             <Grid size={8}>
-                                <TextField
-                                    label="Descripción del item"
-                                    fullWidth
-                                    {...register("descripcion", {required: "La descripción es obligatoria"})}
+                                <ControlTextField<Producto>
+                                    name={"descripcion"}
+                                    label={"Descripción del item"}
+                                    control={control}
+                                    rules = {{
+                                        required: "La descripción es obligatoria"
+                                    }}
                                 />
                             </Grid>
                             <Grid size={3}>
@@ -177,61 +184,48 @@ const WinAgregarModificar = ({title, accion, productData, open, setOpen}: WinPro
                                 </FormControl>
                             </Grid>
                             <Grid size={3}>
-                                <TextField
-                                    label={"Precio"}
-                                    fullWidth
-                                    {...register("precio", {required: "El precio es obligatorio!"})}
-                                    slotProps={{
-                                        input: {
-                                            startAdornment:
-                                                <InputAdornment position="start">
-                                                    <AttachMoneyIcon/>
-                                                </InputAdornment>
 
-                                        }
-                                    }}
+                                <ControlTextField<Producto>
+                                    name={"precio"}
+                                    label={"Precio"}
+                                    control={control}
+                                    icon={<AttachMoneyIcon/>}
+                                    iconPosition={"start"}
                                 />
+
                             </Grid>
                             {tipoItem == 2 &&
                                 (
                                     <>
                                         <Grid size={3}>
-                                            <TextField
+
+                                            <ControlTextField<Producto>
+                                                name={"duracion_min"}
                                                 label={"Duración Mínima (Minutos)"}
-                                                fullWidth
-                                                {...register("duracion_min", {
+                                                control={control}
+                                                icon={<QueryBuilderIcon/>}
+                                                iconPosition={"start"}
+                                                rules={{
                                                     required: "Debe ingresar una duración mínima",
                                                     min: {value: 1, message: "La duración mínima debe ser mayor a 1"}
-                                                })}
-                                                slotProps={{
-                                                    input: {
-                                                        startAdornment:
-                                                            <InputAdornment position="start">
-                                                                <QueryBuilderIcon/>
-                                                            </InputAdornment>
-
-                                                    }
                                                 }}
                                             />
+
                                         </Grid>
                                         <Grid size={3}>
-                                            <TextField
-                                                label={"Duración Máxima (Minutos)"}
-                                                fullWidth
-                                                {...register("duracion_max", {
+
+                                            <ControlTextField<Producto>
+                                                name={"duracion_max"}
+                                                label={"Duración Máxima (Minutos"}
+                                                control={control}
+                                                icon={<QueryBuilderIcon/>}
+                                                iconPosition={"start"}
+                                                rules={{
                                                     required: "Debe ingresar una duración máxima",
                                                     min: {value: 1, message: "La duración máxima debe ser mayor a 1"}
-                                                })}
-                                                slotProps={{
-                                                    input: {
-                                                        startAdornment:
-                                                            <InputAdornment position="start">
-                                                                <QueryBuilderIcon/>
-                                                            </InputAdornment>
-
-                                                    }
                                                 }}
                                             />
+
                                         </Grid>
 
                                     </>
