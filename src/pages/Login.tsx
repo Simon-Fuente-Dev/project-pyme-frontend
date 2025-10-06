@@ -12,11 +12,10 @@ import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import {useForm} from "react-hook-form";
 import {ControlPasswordField} from "../components/Rehusable/PasswordField.tsx";
 import {ControlTextField} from "../components/Rehusable/TextField.tsx";
-
-interface LoginUser  {
-    username: string;
-    password: string;
-}
+import type { LoginUser } from "../types/UserTypes.ts";
+import { useAuthUsuario } from "../api/useLogin.ts";
+import { useAppContext } from "../context/AppContext.tsx";
+import {useNavigate} from 'react-router-dom'
 
 const Login = () => {
 
@@ -27,8 +26,42 @@ const Login = () => {
         }
     });
 
+    const navigate = useNavigate();
+
+    const {setUserId, setPymeId, setNomPyme} = useAppContext()
+
+
+    ///Funcion para enviar la informacion al backend
+    const {mutate, data: dataLogin, isPending, isError} = useAuthUsuario();
+    
+
     const onSubmit = (data: LoginUser) => {
-        console.log(data);
+        mutate(data, {
+            onSuccess: (response) => {
+                const {success, message, data: authData} = response
+
+                
+
+                if(!success) {
+                    console.log('Error:', message);
+                    return;
+                }
+                
+                setUserId(authData.id_usuario)
+                setPymeId(authData.id_pyme)
+                setNomPyme(authData.nombre_pyme)
+                
+                localStorage.setItem('token', authData.token)
+
+                localStorage.setItem('userId', authData.id_usuario.toString())
+                localStorage.setItem('pymeId', authData.id_pyme.toString())
+                localStorage.setItem('nomPyme', authData.nombre_pyme)
+
+
+                navigate('/')
+                
+            }
+        });
     }
 
     const onError = (error: any) => {
@@ -86,17 +119,6 @@ const Login = () => {
                 </Paper>
             </Box>
         </Box>
-        // <Grid container
-        //       direction="column"
-        //       spacing={0}
-        //       sx={{width: "100%", height: "100vh", padding: "4rem", background: "white"}}>
-        //     <Grid item sx={{backgroundColor: "red", width: "500px", height: "700px"}}>
-        //     </Grid>
-        //     <Grid item sx={{backgroundColor: "red"}}>
-        //
-        //     </Grid>
-        //
-        // </Grid>
     )
 }
 
