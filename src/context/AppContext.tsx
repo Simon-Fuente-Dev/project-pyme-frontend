@@ -7,6 +7,7 @@ type AppContextType = {
   setPymeId: (id: number) => void;
   nomPyme: string;
   setNomPyme: (nom: string) => void;
+  isSessionLoading: boolean;
 
 }
 
@@ -15,13 +16,15 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 // Proveedor del contexto
 export const AppProvider = ({ children }: { children: ReactNode }) => {
-  const [userId, setUserId] = useState<number | null>(null);
-  const [pymeId, setPymeId] = useState<number | null>(null);
-  const [nomPyme, setNomPyme] = useState<string | null>(null);
+  const [userId, setUserId] = useState<number | null>(null); /// cambiar a nulo
+  const [pymeId, setPymeId] = useState<number | null>(null); /// cambiar a nulo
+  const [nomPyme, setNomPyme] = useState<string | null>(null); /// cambiar a nulo
+  const [isSessionLoading, setIsSessionLoading] = useState(true)
 
+  ////Codigo de rutas protegidas!!!
   useEffect(() => {
     const token = localStorage.getItem('token');
-
+    console.log(token);
     if (token) {
 
       const storedUserId = localStorage.getItem('userId')
@@ -33,12 +36,13 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       if (storedPymeId) setPymeId(parseInt(storedPymeId))
       if (storedNomPyme) setNomPyme(storedNomPyme)
     }
+    setIsSessionLoading(false)
   }, [])
 
   return (
     <AppContext.Provider value={{
       userId, setUserId, pymeId, setPymeId,
-      nomPyme, setNomPyme
+      nomPyme, setNomPyme, isSessionLoading
     }}>
       {children}
     </AppContext.Provider>

@@ -14,7 +14,10 @@ import LastCommentCard from "../components/MainPage/LastCommentCard.tsx";
 
 
 const MainPage = () => {
-    const {userId} = useAppContext()
+    const {userId, nomPyme, pymeId} = useAppContext()
+    console.log(userId);
+    console.log(nomPyme);
+    console.log(pymeId);
     return (
         <div className="parent">
             <div className="div1">

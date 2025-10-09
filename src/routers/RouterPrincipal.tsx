@@ -6,6 +6,7 @@ import Statistics from '../pages/Statistics.tsx'
 import Login from '../pages/Login.tsx'
 import { Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from '../routers/ProtectedRoute.tsx'
+import SettingsPage from "../pages/SettingsPage.tsx";
 
 const AppRoutes = () => {
     return (
@@ -27,6 +28,7 @@ const AppRoutes = () => {
                 <Route path="/ProductService" element={<ProductService />} />
                 <Route path="/Review" element={<Review />} />
                 <Route path="/Statistics" element={<Statistics />} />
+                <Route path="/Settings" element={<SettingsPage />}/>
                 {/* Redirección por defecto */}
                 <Route path="*" element={<Navigate to="/" />} />
             </Route>

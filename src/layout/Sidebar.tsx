@@ -21,6 +21,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import {styled, useTheme} from '@mui/material/styles';
 import {useLocation, useNavigate} from 'react-router-dom'
 
+import {useAppContext} from "../context/AppContext";
+
 //Media query
 import { useMediaQuery } from '@mui/material';
 import useResponsive from "../hooks/useResponsive.ts";
@@ -41,8 +43,8 @@ const items = [
 ];
 
 const items2 = [
-    {label: 'Configuración', icon: <SettingsIcon/>, path: '/Configuration'},
-    {label: 'Cerrar Sesión', icon: <LogoutIcon/>, path: '/ProductService'},
+    {label: 'Configuración', icon: <SettingsIcon/>, path: '/Settings'},
+    {label: 'Cerrar Sesión', icon: <LogoutIcon/>, path: '', isLogout: true},
 ];
 
 
@@ -52,14 +54,31 @@ interface CustomListItemProps {
     openMenu: boolean;
     icon: React.ReactNode;
     label: string;
+    isLogout: boolean
 }
 
-const CustomListItem = ({ path, selected, openMenu, icon, label }: CustomListItemProps) => {
+const CustomListItem = ({ path, selected, openMenu, icon, label, isLogout }: CustomListItemProps) => {
     const navigate = useNavigate();
+    const {setUserId, setNomPyme, setPymeId} = useAppContext();
+    const logout = () => {
+        setUserId(null)
+        setNomPyme(null)
+        setPymeId(null)
+        localStorage.clear() // o removeItem('token') + otras
+        window.location.href = '/login' // o navigate('/login')
+    }
+
+    const handleClick = () => {
+        if(isLogout) {
+            logout();
+        }else {
+            navigate(path)
+        }
+    }
     return (
         <ListItemButton
             selected={selected}
-            onClick={() => navigate(path)}
+            onClick={handleClick}
             sx={[
                 { minHeight: 48, px: 2.5 },
                 openMenu ? { justifyContent: 'initial' } : { justifyContent: 'center' },
@@ -155,7 +174,9 @@ const Sidebar = ({openMenu}: Props) => {
                                     selected={selected}
                                     openMenu={openMenu}
                                     icon={item.icon}
-                                    label={item.label} />
+                                    label={item.label}
+                                    isLogout={item.isLogout}
+                                />
                             )
                         })}
                     </List>
