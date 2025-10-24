@@ -30,6 +30,7 @@ import {
 import ErrorDialog from "../Rehusable/ErrorDialog.tsx";
 
 import {ControlTextField} from "../Rehusable/TextField.tsx";
+import {useGetTipoItem} from "../../api/useGetTipoItem.ts";
 
 type WinProps = {
     title: string;
@@ -60,6 +61,9 @@ const WinAgregarModificar = ({title, accion, productData, open, setOpen}: WinPro
             duracion_max: productData?.duracion_max ?? 0
         }
     });
+
+    const {data: dataTipoItem, isLoading: isLoadingItem} = useGetTipoItem();
+    console.log(dataTipoItem);
 
     useEffect(() => {
         switch (accion) {
@@ -105,15 +109,6 @@ const WinAgregarModificar = ({title, accion, productData, open, setOpen}: WinPro
         reset();
         setOpen(false);
     }
-
-    /*
-        register se usa en inputs básicos.
-
-        Controller se usa para componentes de librerías externas como MUI Select.
-
-        reset sirve para limpiar o reestablecer valores cuando cambie productData.
-
-    */
 
 
     return (
