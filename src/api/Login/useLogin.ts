@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
-import axiosInstance from "./axios/axiosInstance";
-import type { ApiResponse } from "../types/ApiType";
-import type { LoginUser, AuthData } from "../types/UserTypes";
+import axiosInstance from "../axios/axiosInstance.ts";
+import type { ApiResponse } from "../../types/ApiType.ts";
+import type { LoginUser, AuthData } from "../../types/UserTypes.ts";
 
 
 const authUsuario = async(request: LoginUser) : Promise<ApiResponse<AuthData>> => {

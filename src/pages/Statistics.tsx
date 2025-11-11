@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useRegiones } from "../api/useGetRegiones";
+import { useRegiones } from "../api/Region/useGetRegiones.ts";
 
 const Statistics = () => {
     const {data, isLoading, error} = useRegiones();

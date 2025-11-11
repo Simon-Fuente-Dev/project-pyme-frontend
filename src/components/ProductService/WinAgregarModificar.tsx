@@ -29,7 +29,7 @@ import {
 
 import ErrorDialog from "../Rehusable/ErrorDialog.tsx";
 
-import {ControlTextField} from "../Rehusable/TextField.tsx";
+import {ControlTextField} from "../Rehusable/Inputs/TextField.tsx";
 import {useGetTipoItem} from "../../api/useGetTipoItem.ts";
 
 type WinProps = {
@@ -63,7 +63,6 @@ const WinAgregarModificar = ({title, accion, productData, open, setOpen}: WinPro
     });
 
     const {data: dataTipoItem, isLoading: isLoadingItem} = useGetTipoItem();
-    console.log(dataTipoItem);
 
     useEffect(() => {
         switch (accion) {

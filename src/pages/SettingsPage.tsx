@@ -14,6 +14,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import EditSquareIcon from '@mui/icons-material/EditSquare';
 
 import AddIcon from '@mui/icons-material/Add';
+import {Services} from "../components/Settings/Services.tsx";
 
 
 type PaperTypes = {
@@ -81,27 +82,7 @@ const SettingsPage = () => {
                             </Typography>
                         </Box>
                         {/*Box con los servicios de la pyme */}
-
-                        <Box>
-
-                            <Typography variant={"h6"}>Servicios </Typography>
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    flexDirection: "row",
-                                    gap: '0.5rem',
-                                }}
-                            >
-                                <Chip label={"Comida Rapida"}/>
-                                <Chip label={"Papas Fritas"}/>
-                                <IconButton
-                                >
-                                    <AddIcon fontSize={"medium"}/>
-                                </IconButton>
-
-                            </Box>
-                        </Box>
+                        <Services />
 
                         <Box>
                             <Typography variant={"h6"}>Redes Sociales </Typography>

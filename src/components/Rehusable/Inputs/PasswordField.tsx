@@ -16,7 +16,7 @@ import {
     type FieldValues,
 } from "react-hook-form";
 
-import {type ControlInputProps} from "../../types/InputTypes.ts"
+import {type ControlInputProps} from "../../../types/InputTypes.ts"
 
 
 function ControlPasswordField<T extends FieldValues>({

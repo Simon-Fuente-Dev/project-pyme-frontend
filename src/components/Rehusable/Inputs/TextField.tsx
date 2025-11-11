@@ -11,7 +11,7 @@ import {
     type FieldValues,
 } from "react-hook-form";
 
-import {type ControlInputProps} from "../../types/InputTypes.ts"
+import {type ControlInputProps} from "../../../types/InputTypes.ts"
 
 
 type ControlTextFieldIcon<T extends FieldValues> = ControlInputProps<T> & {

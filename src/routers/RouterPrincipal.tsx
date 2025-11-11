@@ -7,6 +7,7 @@ import Login from '../pages/Login.tsx'
 import { Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from '../routers/ProtectedRoute.tsx'
 import SettingsPage from "../pages/SettingsPage.tsx";
+import Registro from "../pages/Registro.tsx";
 
 const AppRoutes = () => {
     return (
@@ -14,7 +15,7 @@ const AppRoutes = () => {
 
             {/* Ruta publica */}
             <Route path="/Login" element={<Login />} />
-
+            <Route path="/Registrarse" element={<Registro />}/>
 
             {/* Ruta Protegida */}
             <Route

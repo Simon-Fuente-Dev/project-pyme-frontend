@@ -10,10 +10,10 @@ import {
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 
 import {useForm} from "react-hook-form";
-import {ControlPasswordField} from "../components/Rehusable/PasswordField.tsx";
-import {ControlTextField} from "../components/Rehusable/TextField.tsx";
+import {ControlPasswordField} from "../components/Rehusable/Inputs/PasswordField.tsx";
+import {ControlTextField} from "../components/Rehusable/Inputs/TextField.tsx";
 import type { LoginUser } from "../types/UserTypes.ts";
-import { useAuthUsuario } from "../api/useLogin.ts";
+import { useAuthUsuario } from "../api/Login/useLogin.ts";
 import { useAppContext } from "../context/AppContext.tsx";
 import {useNavigate} from 'react-router-dom'
 
@@ -68,11 +68,15 @@ const Login = () => {
         console.log(error);
     }
 
+    const registrarse = () => {
+        navigate('/Registrarse')
+    }
+
     return (
         <Box
             sx={{
                 display: "grid",
-                gridTemplateColumns: "3fr 2fr",
+                gridTemplateColumns: "4fr 2fr",
                 placeContent: "center",
                 width: "100%",
                 height: "100vh",
@@ -112,10 +116,23 @@ const Login = () => {
                             />
                         </Grid>
                     </Grid>
-                    <Button
-                        variant="contained"
-                        onClick={handleSubmit(onSubmit, onError)}
-                    >Iniciar Sesion</Button>
+                    <Box sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: 'flex-end',
+                        alignItems: "flex-end",
+                        gap: "0.5rem",
+                    }}>
+                        <Button
+                            variant="outlined"
+                            onClick={handleSubmit(onSubmit, onError)}
+                        >Iniciar Sesion</Button>
+                        <Button
+                            variant="outlined"
+                            onClick={() => registrarse()}
+                        >Registrarse</Button>
+                    </Box>
+
                 </Paper>
             </Box>
         </Box>

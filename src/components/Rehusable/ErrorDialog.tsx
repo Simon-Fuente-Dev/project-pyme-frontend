@@ -29,16 +29,16 @@ const ErrorDialog = ({ title, content, errors, open, onClose } : ErrorProps) => 
                     </Box>
                 </DialogTitle>
                 <DialogContent>
-                    <Typography>{content}</Typography>
+                    <Typography sx={{marginBottom: '1rem'}} >{content}</Typography>
                     {/*	Recorrer los errors como una lista ordenada de html*/}
 
-                    <ol>
+                    <ul>
                         {errors.map((err, idx) => (
                             <Typography key={idx} component="li" variant="body2">
                                 {err}
                             </Typography>
                         ))}
-                    </ol>
+                    </ul>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={onClose}>Cerrar</Button>
