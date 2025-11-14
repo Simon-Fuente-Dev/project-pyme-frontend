@@ -6,18 +6,30 @@ import UserSection from "../components/Register/UserSection.tsx";
 import {extractErrorMessages} from "../utils/erroresUseForm.ts";
 import ErrorDialog from "../components/Rehusable/ErrorDialog.tsx";
 import PymeSection from "../components/Register/PymeSection.tsx";
+import {useRegistrarUsuario} from "../api/Registro/useRegistrar.ts";
+import axios from "axios";
 
 
 const Registro = () => {
     const [activeStep, setActiveStep] = useState(0);
-    const [skipped, setSkipped] = useState(new Set<number>());
 
     const [openErrorDialog, setOpenErrorDialog] = useState(false);
     const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
+    const {mutate, isPending, isError} = useRegistrarUsuario()
+
 
     ///Variables del formulario!!
-    const {control, watch, handleSubmit, trigger, formState: {errors}, setValue} = useForm<RegisterType>({
+    const {
+        control,
+        watch,
+        handleSubmit,
+        trigger,
+        formState: {errors},
+        setValue,
+        getValues,
+        setError
+    } = useForm<RegisterType>({
         defaultValues: {
             nomUsuario: '',
             email: '',
@@ -25,18 +37,19 @@ const Registro = () => {
             nomPyme: '',
             direccion: '',
             comuna: 0,
-            region: 0
+            region: 0,
+            subServicio: []
         }
     });
 
     const steps = [
         {
             label: "Datos del usuario",
-            content: <UserSection control={control} watch={watch} setValue={setValue} />
+            content: <UserSection control={control} watch={watch} setValue={setValue}/>
         },
         {
             label: "Datos de la pyme",
-            content: <PymeSection control={control} watch={watch}/>
+            content: <PymeSection control={control} watch={watch} setValue={setValue}/>
         },
     ];
 
@@ -44,7 +57,7 @@ const Registro = () => {
     const handleNext = async () => {
 
 
-        if(activeStep == 0) {
+        if (activeStep == 0) {
             const valid1 = await trigger([
                 "pnombre",
                 "snombre",
@@ -58,7 +71,57 @@ const Registro = () => {
             if (!valid1) return; // ❌ No avanzar si hay errores
 
         }
+        if (activeStep == 1) {
+            const valid2 = await trigger([
+                "nomPyme",
+                "descPyme",
+                "tipoServicio",
+                "subServicio",
+                "direccion",
+                "region",
+                "comuna",
+            ]);
+            if (!valid2) return;
 
+            const formData = getValues();
+            mutate(formData, {
+                onSuccess: (response) => {
+                    console.log(response)
+                },
+                onError: (err) => {
+                    if (axios.isAxiosError(err) && err.response) {
+                        const errorMessage = err.response.data?.message ?? "Error desconocido";
+                        const dataError = err.response.data?.data ?? 0;
+                        const arrMensaje = [errorMessage];
+
+                        switch (dataError) {
+                            case 1:
+                                setError("nomUsuario", {
+                                    type: "manual",
+                                    message: "El nombre de usuario ya existe"
+                                })
+                                setActiveStep(0)
+                                break;
+                            case 2:
+                                setError("email", {
+                                    type: "manual",
+                                    message: "El correo electronico ya existe"
+                                })
+                                setActiveStep(0)
+                                break;
+                        }
+
+
+                        setErrorMessages(arrMensaje);
+                        setOpenErrorDialog(true);
+
+                    } else {
+                        console.log("Error inesperado:", err);
+                    }
+                }
+            })
+            return;
+        }
 
 
         setActiveStep((prevActiveStep) => prevActiveStep + 1);

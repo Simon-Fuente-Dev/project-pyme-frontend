@@ -1,3 +1,5 @@
+import type {SubServicioType} from "./ServicioTypes.ts";
+
 export interface RegisterType {
     pnombre: string;
     snombre: string;
@@ -11,5 +13,7 @@ export interface RegisterType {
     descPyme: string;
     direccion: string;
     comuna: number;
-    region: number
+    region: number;
+    tipoServicio: number;
+    subServicio: number[];
 }

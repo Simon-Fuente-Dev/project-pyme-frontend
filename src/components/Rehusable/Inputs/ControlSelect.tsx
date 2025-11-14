@@ -27,9 +27,10 @@ type ControlSelectProps<TFieldValues extends FieldValues, TOption> = {
     icon?: React.ReactNode;
     iconPosition?: 'start' | 'end';
     disabled?: boolean;
-    defaultValue?: string | number;
+    defaultValue?: string | number | Array<string | number>;
     size?: 'small' | 'medium';
     fullWidth?: boolean;
+    multiple?: boolean;
 };
 
 function ControlSelect<TFieldValues extends FieldValues, TOption>({
@@ -46,6 +47,7 @@ function ControlSelect<TFieldValues extends FieldValues, TOption>({
                                                                       defaultValue = '',
                                                                       size = 'medium',
                                                                       fullWidth = true,
+                                                                      multiple = false,
                                                                   }: ControlSelectProps<TFieldValues, TOption>) {
     const labelId = `${name}-label`;
 
@@ -56,7 +58,7 @@ function ControlSelect<TFieldValues extends FieldValues, TOption>({
                 name={name}
                 control={control}
                 rules={rules}
-                defaultValue={defaultValue}
+                defaultValue={defaultValue ?? (multiple ? [] : '')}
                 render={({ field, fieldState }) => (
                     <>
                         <Select
@@ -64,8 +66,13 @@ function ControlSelect<TFieldValues extends FieldValues, TOption>({
                             labelId={labelId}
                             id={name}
                             size={size}
-                            value={field.value ?? ''}
+                            value={
+                                multiple
+                                    ? Array.isArray(field.value) ? field.value : []
+                                    : field.value ?? ""
+                            }
                             error={!!fieldState.error}
+                            multiple={multiple}
                             input={
                                 <OutlinedInput
                                     label={label}

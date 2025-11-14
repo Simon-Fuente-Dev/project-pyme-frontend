@@ -24,12 +24,12 @@ type Props = {
 
 const UserSection = ({control, watch, setValue}: Props) => {
     const llenarForm = () => {
-        setValue("pnombre", "Juan");
-        setValue("snombre", "Carlos");
-        setValue("appaterno", "Pérez");
-        setValue("apmaterno", "González");
-        setValue("nomUsuario", "juanp");
-        setValue("email", "juan@example.com");
+        setValue("pnombre", "Foca");
+        setValue("snombre", "Focaza");
+        setValue("appaterno", "Foquita");
+        setValue("apmaterno", "Focarona");
+        setValue("nomUsuario", "FocaHogar");
+        setValue("email", "foca@foca.com");
         setValue("password", "1234");
         setValue("rPassword", "1234");
     };
@@ -46,6 +46,7 @@ const UserSection = ({control, watch, setValue}: Props) => {
 
             },
             gap: '1.5rem',
+            marginBlock: '1rem',
         }}>
 
             <ControlTextField<RegisterType>
