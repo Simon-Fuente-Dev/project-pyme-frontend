@@ -13,15 +13,16 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 
 import EditSquareIcon from '@mui/icons-material/EditSquare';
 
-import AddIcon from '@mui/icons-material/Add';
-import {Services} from "../components/Settings/Services.tsx";
+import { Services } from "../components/Settings/Services.tsx";
+import { useAppContext } from "../context/AppContext.tsx";
+import { useGetServPyme } from "../api/TipoServ/useGetServPyme.ts";
 
 
 type PaperTypes = {
     children?: React.ReactNode;
 }
 
-const PaperComponent = ({children}: PaperTypes) => {
+const PaperComponent = ({ children }: PaperTypes) => {
     return (
         <Paper
             variant={"outlined"}
@@ -39,23 +40,28 @@ const PaperComponent = ({children}: PaperTypes) => {
 
 
 const SettingsPage = () => {
+
+    const { nomPyme} = useAppContext()
+    const nomCortado = (nomPyme.slice(0,2)).toUpperCase();
+    const {data: dataServPyme} = useGetServPyme()
+
     return (
-        <Box sx={{height: '100%', width: '100%', display: 'flex', flexDirection: 'column', gap: '10px'}}>
+        <Box sx={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {/*<Avatar sx={{height: '100%', width: '100%'}}>H</Avatar>*/}
             <PaperComponent>
                 {/*Box de img, nombre, descripcion y redes sociales*/}
                 <Grid container spacing={2}>
                     <Grid
-                        size={{xs: 12, md: 1, xl: 1}}
+                        size={{ xs: 12, md: 1, xl: 1 }}
                         sx={{
                             display: "flex",
                             justifyContent: "center",
                         }}
                     >
                         <Avatar
-                            sx={{height: '100px', width: '100px'}}
+                            sx={{ height: '100px', width: '100px' }}
                         >
-                            FR
+                            {nomCortado}
                         </Avatar>
                     </Grid>
                     <Grid sx={{
@@ -65,9 +71,9 @@ const SettingsPage = () => {
                     }}>
                         <Box>
                             <Typography variant={"h4"}>
-                                Foqui Restaurante
+                                {nomPyme}
                                 <IconButton size={"medium"}>
-                                    <EditSquareIcon color={"warning"}/>
+                                    <EditSquareIcon color={"warning"} />
                                 </IconButton>
                             </Typography>
 
@@ -77,7 +83,7 @@ const SettingsPage = () => {
                             <Typography variant={"h6"}>
                                 Descripción de la pyme
                                 <IconButton size={"small"}>
-                                    <EditSquareIcon color={"warning"} fontSize={"small"}/>
+                                    <EditSquareIcon color={"warning"} fontSize={"small"} />
                                 </IconButton>
                             </Typography>
                         </Box>
@@ -86,15 +92,15 @@ const SettingsPage = () => {
 
                         <Box>
                             <Typography variant={"h6"}>Redes Sociales </Typography>
-                            <Box sx={{display: 'flex', gap: '0.5rem'}}>
+                            <Box sx={{ display: 'flex', gap: '0.5rem' }}>
                                 <IconButton size={"large"}>
-                                    <InstagramIcon fontSize={"large"}/>
+                                    <InstagramIcon fontSize={"large"} />
                                 </IconButton>
                                 <IconButton size={"large"}>
-                                    <WhatsAppIcon fontSize={"large"}/>
+                                    <WhatsAppIcon fontSize={"large"} />
                                 </IconButton>
                                 <IconButton size={"large"}>
-                                    <FacebookIcon fontSize={"large"}/>
+                                    <FacebookIcon fontSize={"large"} />
                                 </IconButton>
                             </Box>
 

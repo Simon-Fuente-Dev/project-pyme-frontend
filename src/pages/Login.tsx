@@ -3,11 +3,9 @@ import {
     Paper,
     Grid,
     Typography,
-    TextField,
-    FormControl, Button
+    Button
 } from "@mui/material";
 
-import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 
 import {useForm} from "react-hook-form";
 import {ControlPasswordField} from "../components/Rehusable/Inputs/PasswordField.tsx";
@@ -28,7 +26,7 @@ const Login = () => {
 
     const navigate = useNavigate();
 
-    const {setUserId, setPymeId, setNomPyme} = useAppContext()
+    const {setNomPyme, setToken} = useAppContext()
 
 
     ///Funcion para enviar la informacion al backend
@@ -46,15 +44,10 @@ const Login = () => {
                     console.log('Error:', message);
                     return;
                 }
-                
-                setUserId(authData.id_usuario)
-                setPymeId(authData.id_pyme)
+                setToken(authData.token)
                 setNomPyme(authData.nombre_pyme)
                 
                 localStorage.setItem('token', authData.token)
-
-                localStorage.setItem('userId', authData.id_usuario.toString())
-                localStorage.setItem('pymeId', authData.id_pyme.toString())
                 localStorage.setItem('nomPyme', authData.nombre_pyme)
 
 

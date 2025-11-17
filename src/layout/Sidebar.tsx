@@ -59,11 +59,10 @@ interface CustomListItemProps {
 
 const CustomListItem = ({ path, selected, openMenu, icon, label, isLogout }: CustomListItemProps) => {
     const navigate = useNavigate();
-    const {setUserId, setNomPyme, setPymeId} = useAppContext();
+    const {setNomPyme, setToken} = useAppContext();
     const logout = () => {
-        setUserId(null)
+        setToken(null)
         setNomPyme(null)
-        setPymeId(null)
         localStorage.clear() // o removeItem('token') + otras
         window.location.href = '/login' // o navigate('/login')
     }

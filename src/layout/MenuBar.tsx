@@ -6,6 +6,7 @@ import {AppBar, Toolbar, IconButton, Typography, Avatar} from '@mui/material';
 import {useState} from "react";
 
 import {useTheme} from '@mui/material/styles';
+import { useAppContext } from '../context/AppContext';
 
 interface Props {
     openMenu: boolean;
@@ -14,6 +15,8 @@ interface Props {
 
 const MenuBar = ({openMenu, setOpenMenu}: Props) => {
     const theme = useTheme();
+    const {nomPyme} = useAppContext();
+    const nomCortado = (nomPyme.slice(0,2)).toUpperCase() 
     return (
         <AppBar
             position="fixed"
@@ -30,7 +33,9 @@ const MenuBar = ({openMenu, setOpenMenu}: Props) => {
                     {openMenu ? <MenuOpenIcon /> : <MenuIcon />}
 
                 </IconButton>
-                <Avatar>P</Avatar>
+                <Avatar>
+                    <Typography variant="h6">{nomCortado}</Typography>
+                </Avatar>
                 <Typography variant="h6" noWrap component="div">
                     Mi Panel de Control
                 </Typography>

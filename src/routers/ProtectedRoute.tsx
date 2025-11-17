@@ -6,11 +6,11 @@ interface Props {
 }
 
 const ProtectedRoute = ({children}: Props) => {
-    const {userId, isSessionLoading} = useAppContext()
+    const {token, isSessionLoading} = useAppContext()
     if (isSessionLoading) {
         return <p>Cargando sesión...</p> // o spinner, skeleton, etc.
     }
-    if (!userId) {
+    if (!token) {
         return <Navigate to="/Login" replace/>
     }
 
