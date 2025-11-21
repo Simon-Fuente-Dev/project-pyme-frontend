@@ -1,44 +1,58 @@
-import {Box, Typography, Chip, IconButton} from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import {useState} from "react";
-import {WinAgregarServicio} from "./WinAgregarServicio.tsx";
+import {Box, Typography, Chip} from "@mui/material";
+import {useGetServPyme} from "../../api/TipoServ/useGetServPyme.ts";
+import {useGetSubServPyme} from "../../api/SubServicio/useGetSubServPyme.ts";
+import {type TipoServicioType, type SubServicioType} from "../../types/ServicioTypes";
 
 export const Services = () => {
-    const [openService, setOpenService] = useState<boolean>(false);
+    const {data: dataServPyme} = useGetServPyme()
+    const {data: dataSubServPyme} = useGetSubServPyme()
     return (
         <>
-            <Box sx={{display: 'flex', gap: '0.5rem', flexDirection: 'column'}}>
+            <Box sx={{display: 'flex', gap: '0.8rem', flexDirection: 'column'}}>
                 <Box>
 
-                    <Typography variant={"h6"}>Servicios </Typography>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            flexDirection: "row",
-                            gap: '0.5rem',
-                        }}
-                    >
-                        <Chip label={"Comida Rapida"}/>
-                        <Chip label={"Papas Fritas"}/>
-                        <IconButton
-                            onClick={() => setOpenService(true)}
-                        >
-                            <AddIcon fontSize={"medium"}/>
-                        </IconButton>
+                    <Typography variant={"h6"}>Tipo de Servicio de la pyme </Typography>
 
-                    </Box>
+                    {dataServPyme != null && dataServPyme.length > 0 && (
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                flexDirection: "row",
+                                gap: '0.5rem',
+                            }}
+                        >
+                            {dataServPyme.map((serv: TipoServicioType) => {
+                                return (
+                                    <Chip key={serv.tipo_servicio} label={serv.tipo_servicio}/>
+
+                                )
+                            })}
+                        </Box>
+
+                    )}
 
                 </Box>
                 <Box>
                     <Typography variant={"h6"}>Sub Servicios </Typography>
-                    <IconButton
-                    >
-                        <AddIcon fontSize={"medium"}/>
-                    </IconButton>
+                    {dataSubServPyme != null && dataSubServPyme.length > 0 && (
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                flexDirection: "row",
+                                gap: '0.5rem',
+                            }}
+                        >
+                            {dataSubServPyme.map((subServ: SubServicioType) => {
+                                return (
+                                    <Chip key={subServ.tipo_sub_servicio} label={subServ.tipo_sub_servicio}/>
+                                )
+                            })}
+                        </Box>
+                    )}
                 </Box>
             </Box>
-            <WinAgregarServicio open={openService} setOpen={setOpenService} />
         </>
     )
 }

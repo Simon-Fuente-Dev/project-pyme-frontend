@@ -15,7 +15,7 @@ import EditSquareIcon from '@mui/icons-material/EditSquare';
 
 import { Services } from "../components/Settings/Services.tsx";
 import { useAppContext } from "../context/AppContext.tsx";
-import { useGetServPyme } from "../api/TipoServ/useGetServPyme.ts";
+import SocialMedia from "../components/Settings/SocialMedia.tsx";
 
 
 type PaperTypes = {
@@ -43,7 +43,6 @@ const SettingsPage = () => {
 
     const { nomPyme} = useAppContext()
     const nomCortado = (nomPyme.slice(0,2)).toUpperCase();
-    const {data: dataServPyme} = useGetServPyme()
 
     return (
         <Box sx={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -90,21 +89,7 @@ const SettingsPage = () => {
                         {/*Box con los servicios de la pyme */}
                         <Services />
 
-                        <Box>
-                            <Typography variant={"h6"}>Redes Sociales </Typography>
-                            <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-                                <IconButton size={"large"}>
-                                    <InstagramIcon fontSize={"large"} />
-                                </IconButton>
-                                <IconButton size={"large"}>
-                                    <WhatsAppIcon fontSize={"large"} />
-                                </IconButton>
-                                <IconButton size={"large"}>
-                                    <FacebookIcon fontSize={"large"} />
-                                </IconButton>
-                            </Box>
-
-                        </Box>
+                        <SocialMedia />
                     </Grid>
                 </Grid>
 

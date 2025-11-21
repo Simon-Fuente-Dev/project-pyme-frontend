@@ -3,7 +3,7 @@ import {
     InputLabel,
     OutlinedInput,
     InputAdornment,
-    IconButton
+    IconButton, FormHelperText
 } from "@mui/material";
 
 import {
@@ -26,6 +26,7 @@ function ControlTextField<T extends FieldValues>({
                                                      rules,
                                                      icon,
                                                      iconPosition = "start",
+                                                     helperText = "",
                                                  }: ControlTextFieldIcon<T>) {
     return (
         <FormControl fullWidth>
@@ -52,6 +53,14 @@ function ControlTextField<T extends FieldValues>({
                                 ) : undefined
                             }
                         />
+                        {helperText ? (
+                            <FormHelperText >
+                                {helperText}
+                            </FormHelperText>
+                        ) : (
+                            <></>
+                        )}
+
                     </>
                 )}/>
         </FormControl>
