@@ -11,6 +11,7 @@ import ErrorDialog from "../Rehusable/ErrorDialog.tsx";
 import {type AgregarEditarRed, type RedType} from "../../types/RedType.ts"
 import {useAgregarRed} from "../../api/RedSocial/useAgregarRed.ts";
 import SuccessDialog from "../Rehusable/SuccessDialog.tsx";
+import TablaAdmRedes from "./TablaAdmRedes.tsx";
 
 
 type WinProps = {
@@ -134,9 +135,9 @@ const WinAgregarRed = ({title, open, setOpen, data}: WinProps) => {
                         <Box
                             sx={{
                                 display: "flex",
-                                flexDirection: "column",
+                                flexDirection: "row",
                                 gap: "1rem",
-                                alignItems: "flex-end",
+                                alignItems: "flex-start",
                             }}
                         >
                             <Button
@@ -155,7 +156,7 @@ const WinAgregarRed = ({title, open, setOpen, data}: WinProps) => {
                                 Cancelar
                             </Button>
                         </Box>
-
+                        <TablaAdmRedes />
                     </Box>
                 </DialogContent>
             </Dialog>

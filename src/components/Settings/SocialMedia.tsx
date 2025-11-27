@@ -3,9 +3,7 @@ import {Box, IconButton, Tooltip, Typography} from "@mui/material";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import FacebookIcon from "@mui/icons-material/Facebook";
-import EditSquareIcon from '@mui/icons-material/EditSquare';
-import DeleteIcon from "@mui/icons-material/Delete";
-
+import TagIcon from '@mui/icons-material/Tag';
 import AddIcon from "@mui/icons-material/Add";
 import WinAgregarRed from "./WinAgregarRed.tsx";
 import {useGetRedPyme} from "../../api/RedSocial/useGetRedPyme.ts";
@@ -17,23 +15,30 @@ const SocialMedia = () => {
     const [open, setOpen] = useState(false);
     const {data: dataRedes, isLoading: isLoadingPymeRed} = useGetRedPyme();
     const {data: dataRed, isLoading: isLoadingDataRed} = useGetTipoRedPyme();
-    console.log(dataRedes)
     return (
         <Box>
-            <Typography variant={"h6"}>Redes Sociales </Typography>
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center'
+                }}
+            >
+                <Typography variant={"h6"}>
+                    Redes Sociales
+
+                </Typography>
+                <Tooltip title={"Administrar Redes Sociales"}>
+                    <IconButton
+                        onClick={() => {
+                            setOpen(true);
+                        }}
+                    >
+                        <TagIcon/>
+                    </IconButton>
+                </Tooltip>
+            </Box>
             <Box sx={{display: 'flex', gap: '0.5rem'}}>
-                {dataRed.length > 0 ?(
-                    <Tooltip title={"Agregar Redes Sociales"}>
-                        <IconButton
-                            size={"large"} sx={{height: "80px"}}
-                            onClick={() => {
-                                setOpen(true);
-                            }}
-                        >
-                            <AddIcon sx={{width: "100%", height: "100%"}}/>
-                        </IconButton>
-                    </Tooltip>
-                ) : ""}
 
                 {validarCarga(isLoadingPymeRed, dataRedes) ? (
                     dataRedes.map((red: RedPymeType) => {
@@ -57,21 +62,10 @@ const SocialMedia = () => {
                                     flexDirection: "column",
                                     alignItems: "center",
                                     position: "relative",
-                                    width: 80,
+                                    width: 50,
                                 }}
                             >
-                                {/* Ícono grande */}
-                                <IconButton
-                                    size="large"
-                                    sx={{
-                                        width: 80,
-                                        height: 80,
-                                        borderRadius: "50%",
-                                    }}
-                                >
-                                    {icon}
-                                </IconButton>
-
+                                {icon}
                             </Box>
                         )
                     })
@@ -83,7 +77,7 @@ const SocialMedia = () => {
             <WinAgregarRed
                 title={"Administrar Redes"}
                 open={open}
-                data={dataRed}
+                data={dataRed || []}
                 setOpen={setOpen}/>
         </Box>
     )
