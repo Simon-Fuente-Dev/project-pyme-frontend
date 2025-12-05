@@ -12,11 +12,12 @@ import {
 } from "react-hook-form";
 
 import {type ControlInputProps} from "../../../types/InputTypes.ts"
-
+import type { SxProps, Theme } from '@mui/material/styles';
 
 type ControlTextFieldIcon<T extends FieldValues> = ControlInputProps<T> & {
     icon?: React.ReactNode;
     iconPosition?: "start" | "end";
+    sx?: SxProps<Theme>;
 }
 
 function ControlTextField<T extends FieldValues>({
@@ -27,6 +28,7 @@ function ControlTextField<T extends FieldValues>({
                                                      icon,
                                                      iconPosition = "start",
                                                      helperText = "",
+                                                     sx= {}
                                                  }: ControlTextFieldIcon<T>) {
     return (
         <FormControl fullWidth>
@@ -36,12 +38,13 @@ function ControlTextField<T extends FieldValues>({
                 rules={rules}
                 render={({field, fieldState}) => (
                     <>
-                        <InputLabel id={name}>{label}</InputLabel>
+                        <InputLabel id={name} sx={sx}>{label}</InputLabel>
                         <OutlinedInput
                             {...field}
                             id={name}
                             label={label}
                             error={!!fieldState.error}
+                            sx={sx}
                             startAdornment={
                                 icon && iconPosition === "start" ? (
                                     <InputAdornment position={"start"}>{icon}</InputAdornment>
@@ -54,7 +57,9 @@ function ControlTextField<T extends FieldValues>({
                             }
                         />
                         {helperText ? (
-                            <FormHelperText >
+                            <FormHelperText
+                                sx={sx}
+                            >
                                 {helperText}
                             </FormHelperText>
                         ) : (

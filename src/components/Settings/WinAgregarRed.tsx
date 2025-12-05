@@ -1,5 +1,5 @@
-import {type Dispatch, type SetStateAction, useState} from "react";
-import {Box, Button, Dialog, DialogContent, DialogTitle} from "@mui/material";
+import {type Dispatch, type SetStateAction, useEffect, useState} from "react";
+import {Box, Button, Dialog, DialogContent, DialogTitle, IconButton, Tooltip} from "@mui/material";
 import TagIcon from '@mui/icons-material/Tag';
 import SaveIcon from '@mui/icons-material/Save';
 import {useGetTipoRedPyme} from "../../api/RedSocial/useGetTipoRed.ts";
@@ -12,6 +12,8 @@ import {type AgregarEditarRed, type RedType} from "../../types/RedType.ts"
 import {useAgregarRed} from "../../api/RedSocial/useAgregarRed.ts";
 import SuccessDialog from "../Rehusable/SuccessDialog.tsx";
 import TablaAdmRedes from "./TablaAdmRedes.tsx";
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 
 type WinProps = {
@@ -26,11 +28,12 @@ const WinAgregarRed = ({title, open, setOpen, data}: WinProps) => {
 
     const [openErrorDialog, setOpenErrorDialog] = useState(false);
     const [errorMessages, setErrorMessages] = useState<string[]>([]);
+    const [wspDisplay, setWspDisplay] = useState<boolean>(false);
 
     const [successTitle, setSuccessTitle] = useState<string>("");
     const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
 
-    const {control, watch, handleSubmit, reset, setValue} = useForm<AgregarEditarRed>({
+    const {control, watch, handleSubmit, reset, setValue, unregister} = useForm<AgregarEditarRed>({
         defaultValues: {
             idRed: 0,
             idRedPyme: 0,
@@ -39,7 +42,12 @@ const WinAgregarRed = ({title, open, setOpen, data}: WinProps) => {
         }
     });
 
+    const watchEditar = watch("idRedPyme")
+    const watchRed = watch("idRed");
+
     const onSubmit = (values: AgregarEditarRed) => {
+        console.log(values)
+        reset()
         mutate(values, {
             onSuccess: (response) => {
                 setSuccessTitle(response?.message || "")
@@ -48,7 +56,7 @@ const WinAgregarRed = ({title, open, setOpen, data}: WinProps) => {
         })
     }
 
-    const onCancel = () => {
+    const onCLose = () => {
         setOpen(false)
         reset()
     }
@@ -59,7 +67,19 @@ const WinAgregarRed = ({title, open, setOpen, data}: WinProps) => {
         setOpenErrorDialog(true);
     }
 
-    const watchRed = watch("idRed");
+    useEffect(() => {
+        if (watchRed == 1) {
+            setWspDisplay(true);
+            setValue("url", "");
+            unregister("url");
+        } else {
+            setWspDisplay(false);
+            setValue("numeroTelefono", "");
+            unregister("numeroTelefono");
+        }
+    }, [watchRed])
+    console.log(watchRed)
+
     return (
         <>
             <Dialog
@@ -67,11 +87,23 @@ const WinAgregarRed = ({title, open, setOpen, data}: WinProps) => {
                 onClose={() => setOpen(false)}
                 fullWidth={true}
             >
-                <DialogTitle>
+                <DialogTitle
+                    sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                    }}>
                     <Box sx={{display: "flex", alignItems: "center", gap: "0.3em"}}>
                         <TagIcon/>
                         {title}
                     </Box>
+                    <Tooltip title={"Cerrar"}>
+                        <IconButton
+                            onClick={() => onCLose()}
+                        >
+                            <CancelIcon/>
+                        </IconButton>
+                    </Tooltip>
                 </DialogTitle>
                 <DialogContent>
                     <Box
@@ -96,6 +128,7 @@ const WinAgregarRed = ({title, open, setOpen, data}: WinProps) => {
                                 label={"Tipo de red"}
                                 control={control}
                                 data={data || []}
+                                disabled={watchEditar > 0 ? true : false}
                                 valueField={"id_red"}
                                 textField={"nom_red"}
                                 rules={{
@@ -106,30 +139,35 @@ const WinAgregarRed = ({title, open, setOpen, data}: WinProps) => {
                                 }}
                             />
 
-                            {watchRed == 1 ? (
-                                <ControlTextField
-                                    name={"numeroTelefono"}
-                                    label={"Número de telefono"}
-                                    control={control}
-                                    rules={{
+                            <ControlTextField
+                                name={"numeroTelefono"}
+                                label={"Número de telefono"}
+                                control={control}
+                                rules={wspDisplay
+                                        ? {
+                                        required: "Debe ingresar un número de teléfono",
                                         pattern: {
                                             value: /^9\d{8}$/,
-                                            message: "Debe ingresar un número de telefono valido ej: 912345678"
+                                            message: "Debe ingresar un número válido. Ej: 912345678"
                                         }
-                                    }}
-                                    helperText={"Formato: 912345678"}
-                                />
+                                    }
+                                    : {}}
+                                helperText={"Formato: 912345678"}
+                                sx={{display: wspDisplay ? 'block' : 'none'}}
+                            />
 
-                            ) : (
-                                <ControlTextField
-                                    name={"url"}
-                                    label={"Link de la red"}
-                                    control={control}
-                                    rules={{
+                            <ControlTextField
+                                name={"url"}
+                                label={"Link de la red"}
+                                control={control}
+                                rules={!wspDisplay
+                                    ? {
                                         required: "Debe ingresar el link de la red social",
-                                    }}
-                                />
-                            )}
+                                    }
+                                    : {}
+                                }
+                                sx={{display: !wspDisplay ? 'block' : 'none'}}
+                            />
 
                         </Box>
                         <Box
@@ -141,17 +179,18 @@ const WinAgregarRed = ({title, open, setOpen, data}: WinProps) => {
                             }}
                         >
                             <Button
+                                color={watchEditar > 0 ? "warning" : "primary"}
                                 variant="contained"
-                                startIcon={<SaveIcon/>}
+                                startIcon={watchEditar > 0 ? <DriveFileRenameOutlineIcon/> : <SaveIcon/>}
                                 onClick={handleSubmit(onSubmit, onError)}
                             >
-                                Guardar
+                                {watchEditar > 0 ? "Editar" : "Guardar"}
                             </Button>
 
                             <Button
                                 variant="contained"
                                 color={"error"}
-                                onClick={() => onCancel()}
+                                onClick={() => reset()}
                             >
                                 Cancelar
                             </Button>
@@ -175,9 +214,9 @@ const WinAgregarRed = ({title, open, setOpen, data}: WinProps) => {
                 open={openSuccessDialog}
                 onClose={() => {
                     setOpenSuccessDialog(false)
-                    setOpen(false)
+                    reset()
                 }
-            }/>
+                }/>
         </>
     )
 }

@@ -4,7 +4,7 @@ import type {ApiResponse} from "../../types/ApiType.ts";
 import type {AgregarEditarRed} from "../../types/RedType.ts"
 
 const agregarRed = async (request: AgregarEditarRed) : Promise<ApiResponse<any>> => {
-    const {data} = await axiosInstance.post<ApiResponse<any>>("agregar-red-pyme", request);
+    const {data} = await axiosInstance.post<ApiResponse<any>>("agregar-editar-red-pyme", request);
     return data;
 }
 
@@ -14,6 +14,7 @@ export const useAgregarRed = () => {
         mutationFn: agregarRed,
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ["tipoRed"]});
+            queryClient.invalidateQueries({queryKey: ["redPyme"]});
         }
     })
 }
