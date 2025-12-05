@@ -30,9 +30,10 @@ const WinAgregarRed = ({title, open, setOpen, data}: WinProps) => {
     const [successTitle, setSuccessTitle] = useState<string>("");
     const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
 
-    const {control, watch, handleSubmit, reset} = useForm<AgregarEditarRed>({
+    const {control, watch, handleSubmit, reset, setValue} = useForm<AgregarEditarRed>({
         defaultValues: {
             idRed: 0,
+            idRedPyme: 0,
             numeroTelefono: 0,
             url: '',
         }
@@ -43,7 +44,6 @@ const WinAgregarRed = ({title, open, setOpen, data}: WinProps) => {
             onSuccess: (response) => {
                 setSuccessTitle(response?.message || "")
                 setOpenSuccessDialog(true)
-                onCancel()
             }
         })
     }
@@ -156,7 +156,7 @@ const WinAgregarRed = ({title, open, setOpen, data}: WinProps) => {
                                 Cancelar
                             </Button>
                         </Box>
-                        <TablaAdmRedes />
+                        <TablaAdmRedes control={control} watch={watch} setValue={setValue}/>
                     </Box>
                 </DialogContent>
             </Dialog>
