@@ -1,5 +1,5 @@
 import {useQuery} from "@tanstack/react-query";
-import axiosInstance from "./axios/axiosInstance.ts";
+import axiosInstance from "../axios/axiosInstance.ts";
 
 interface Item {
     idTipoItem: number;

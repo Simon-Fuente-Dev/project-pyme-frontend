@@ -4,18 +4,18 @@ import {
     Paper,
     Grid,
     Typography,
-    Chip, Button, IconButton
+    IconButton
 } from "@mui/material";
-
-import InstagramIcon from '@mui/icons-material/Instagram';
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import FacebookIcon from '@mui/icons-material/Facebook';
 
 import EditSquareIcon from '@mui/icons-material/EditSquare';
 
 import { Services } from "../components/Settings/Services.tsx";
 import { useAppContext } from "../context/AppContext.tsx";
 import SocialMedia from "../components/Settings/SocialMedia.tsx";
+import { useGetDataPyme } from "../api/Pyme/useGetDataPyme.ts";
+import { validarCarga } from "../utils/ValidaCarga.ts";
+import { useEffect, useState } from "react";
+import NomPymeComponent from "../components/Settings/NomPymeComponent.tsx";
 
 
 type PaperTypes = {
@@ -41,8 +41,17 @@ const PaperComponent = ({ children }: PaperTypes) => {
 
 const SettingsPage = () => {
 
-    const { nomPyme} = useAppContext()
-    const nomCortado = (nomPyme.slice(0,2)).toUpperCase();
+    
+    const { data: dataPyme, isLoading: isLoadingPyme } = useGetDataPyme() || {};
+    const [nomCortado, setNomCortado] = useState<string>("")
+
+    useEffect(()=> {
+        if(!isLoadingPyme) {
+            const corte = dataPyme?.nombre_pyme.slice(0, 2).toUpperCase() || "";
+            setNomCortado(corte);
+        }
+
+    }, [isLoadingPyme])
 
     return (
         <Box sx={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -66,16 +75,14 @@ const SettingsPage = () => {
                     <Grid sx={{
                         display: "flex",
                         flexDirection: "column",
-                        gap: '1rem'
+                        gap: '2rem'
                     }}>
                         <Box>
-                            <Typography variant={"h4"}>
-                                {nomPyme}
-                                <IconButton size={"medium"}>
-                                    <EditSquareIcon color={"warning"} />
-                                </IconButton>
-                            </Typography>
-
+                            {!isLoadingPyme ? (
+                                <NomPymeComponent 
+                                    nombre_pyme={dataPyme?.nombre_pyme }
+                                />
+                            ): ""}
                         </Box>
 
                         <Box>
@@ -94,9 +101,7 @@ const SettingsPage = () => {
                 </Grid>
 
             </PaperComponent>
-            <PaperComponent>
-                <h1>Historia de la pyme</h1>
-            </PaperComponent>
+
         </Box>
     );
 }

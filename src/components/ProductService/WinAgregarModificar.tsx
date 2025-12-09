@@ -1,5 +1,5 @@
 import {useForm, Controller} from "react-hook-form";
-import {type Dispatch, type SetStateAction, useState, useEffect} from "react";
+import {type Dispatch, type SetStateAction, useEffect} from "react";
 import AddIcon from '@mui/icons-material/Add';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
@@ -17,20 +17,15 @@ import {
     DialogContent,
     Grid,
     Box,
-    TextField,
     Select,
     MenuItem,
     InputLabel,
     FormControl,
-    FilledInput,
-    InputAdornment,
     DialogActions
 } from "@mui/material";
 
-import ErrorDialog from "../Rehusable/ErrorDialog.tsx";
-
 import {ControlTextField} from "../Rehusable/Inputs/TextField.tsx";
-import {useGetTipoItem} from "../../api/useGetTipoItem.ts";
+import {useGetTipoItem} from "../../api/Item/useGetTipoItem.ts";
 
 type WinProps = {
     title: string;
@@ -50,7 +45,7 @@ const WinAgregarModificar = ({title, accion, productData, open, setOpen}: WinPro
     const colorIcon = accion === "agregar" ? "success" :"warning";
     const icon = accion === "agregar" ? <AddIcon color={colorIcon}/> : <DriveFileRenameOutlineIcon color={colorIcon}/>;
     // const [tipoItem, setTipoItem] = useState();
-    const {control, register, handleSubmit, watch, formState: {errors}, reset} = useForm<Producto>({
+    const {control, handleSubmit, watch, formState: {errors}, reset} = useForm<Producto>({
         defaultValues: {
             id: productData?.id ?? 0,
             nombre: productData?.nombre ?? "",

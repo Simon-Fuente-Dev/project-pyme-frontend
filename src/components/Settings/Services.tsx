@@ -8,7 +8,7 @@ export const Services = () => {
     const {data: dataSubServPyme} = useGetSubServPyme()
     return (
         <>
-            <Box sx={{display: 'flex', gap: '0.8rem', flexDirection: 'column'}}>
+            <Box sx={{display: 'flex', gap: '2rem', flexDirection: 'column'}}>
                 <Box>
 
                     <Typography variant={"h6"}>Tipo de Servicio de la pyme </Typography>
