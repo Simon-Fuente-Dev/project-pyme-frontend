@@ -16,6 +16,7 @@ import { useGetDataPyme } from "../api/Pyme/useGetDataPyme.ts";
 import { validarCarga } from "../utils/ValidaCarga.ts";
 import { useEffect, useState } from "react";
 import NomPymeComponent from "../components/Settings/NomPymeComponent.tsx";
+import DescPymeComponent from "../components/Settings/DescPymeComponent.tsx";
 
 
 type PaperTypes = {
@@ -51,7 +52,7 @@ const SettingsPage = () => {
             setNomCortado(corte);
         }
 
-    }, [isLoadingPyme])
+    }, [isLoadingPyme, dataPyme])
 
     return (
         <Box sx={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -75,7 +76,7 @@ const SettingsPage = () => {
                     <Grid sx={{
                         display: "flex",
                         flexDirection: "column",
-                        gap: '2rem'
+                        gap: '1rem'
                     }}>
                         <Box>
                             {!isLoadingPyme ? (
@@ -86,12 +87,15 @@ const SettingsPage = () => {
                         </Box>
 
                         <Box>
-                            <Typography variant={"h6"}>
-                                Descripción de la pyme
-                                <IconButton size={"small"}>
-                                    <EditSquareIcon color={"warning"} fontSize={"small"} />
-                                </IconButton>
-                            </Typography>
+
+                            <p>
+                                {!isLoadingPyme ? (
+                                    <DescPymeComponent
+                                        descripcion_pyme={dataPyme?.descripcion_pyme}
+                                    />
+
+                                ) : ""}
+                            </p>
                         </Box>
                         {/*Box con los servicios de la pyme */}
                         <Services />

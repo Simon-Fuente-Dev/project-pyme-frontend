@@ -3,7 +3,7 @@ import { Table, TableBody, TableHead, TableRow, TableCell, IconButton, Box } fro
 import { validarCarga } from "../../utils/ValidaCarga.ts";
 import type { RedPymeType } from "../../types/RedType.ts";
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
-import RemoveIcon from '@mui/icons-material/Remove';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import {useState} from "react";
 import type { Control, UseFormWatch, UseFormSetValue } from "react-hook-form";
@@ -72,7 +72,7 @@ const TablaAdmRedes = ({control, watch, setValue}: Props) => {
                                         <IconButton
                                             onClick={() => eliminarRed(red)}
                                         >
-                                            <RemoveIcon color={"error"} />
+                                            <DeleteIcon color={"error"} />
                                         </IconButton>
                                     </Box>
 

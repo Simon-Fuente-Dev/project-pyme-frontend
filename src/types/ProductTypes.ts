@@ -1,12 +1,12 @@
-export type TipoItem = "Producto" | "Servicio";
+
 
 //Interfaz de producto
 export interface Producto {
     id: number;
     nombre: string;
     descripcion: string;
-    tipo: TipoItem;
-    idTipo: number;
+    tipoItem: number;
+    tipoServicio: number;
     precio: number;
     duracion_min: number;
     duracion_max: number;

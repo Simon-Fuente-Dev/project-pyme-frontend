@@ -1,9 +1,7 @@
 import { createContext, ReactNode, useState, useContext, useEffect } from "react";
 
 type AppContextType = {
-  nomPyme: string;
   token: string;
-  setNomPyme: (nom: string) => void;
   isSessionLoading: boolean;
 
 }
@@ -13,8 +11,6 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 // Proveedor del contexto
 export const AppProvider = ({ children }: { children: ReactNode }) => {
-  const [nomPyme, setNomPyme] = useState<string | null>(null); /// cambiar a nulo
-
   const [token, setToken] = useState<string | null>(null); /// cambiar a nulo
   const [isSessionLoading, setIsSessionLoading] = useState(true)
 
@@ -24,16 +20,13 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     setToken(sessionToken)
     if (sessionToken) {
 
-      const storedNomPyme = localStorage.getItem('nomPyme')
-      if (storedNomPyme) setNomPyme(storedNomPyme)
     }
     setIsSessionLoading(false)
   }, [])
 
   return (
     <AppContext.Provider value={{
-      token, setToken,
-      nomPyme, setNomPyme, isSessionLoading
+      token, setToken, isSessionLoading
     }}>
       {children}
     </AppContext.Provider>

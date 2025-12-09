@@ -3,10 +3,10 @@ import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 
 import {AppBar, Toolbar, IconButton, Typography, Avatar} from '@mui/material';
 
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 import {useTheme} from '@mui/material/styles';
-import { useAppContext } from '../context/AppContext';
+import {useGetDataPyme} from "../api/Pyme/useGetDataPyme.ts";
 
 interface Props {
     openMenu: boolean;
@@ -14,9 +14,17 @@ interface Props {
 }
 
 const MenuBar = ({openMenu, setOpenMenu}: Props) => {
+    const { data: dataPyme, isLoading: isLoadingPyme } = useGetDataPyme() || {};
+    const [nomCortado, setNomCortado] = useState<string>("")
+
+    useEffect(()=> {
+        if(!isLoadingPyme) {
+            const corte = dataPyme?.nombre_pyme.slice(0, 2).toUpperCase() || "";
+            setNomCortado(corte);
+        }
+
+    }, [isLoadingPyme, dataPyme])
     const theme = useTheme();
-    const {nomPyme} = useAppContext();
-    const nomCortado = (nomPyme.slice(0,2)).toUpperCase() 
     return (
         <AppBar
             position="fixed"

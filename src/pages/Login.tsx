@@ -26,7 +26,7 @@ const Login = () => {
 
     const navigate = useNavigate();
 
-    const {setNomPyme, setToken} = useAppContext()
+    const {setToken} = useAppContext()
 
 
     ///Funcion para enviar la informacion al backend
@@ -38,18 +38,13 @@ const Login = () => {
             onSuccess: (response) => {
                 const {success, message, data: authData} = response
 
-                
-
                 if(!success) {
                     console.log('Error:', message);
                     return;
                 }
                 setToken(authData.token)
-                setNomPyme(authData.nombre_pyme)
                 
                 localStorage.setItem('token', authData.token)
-                localStorage.setItem('nomPyme', authData.nombre_pyme)
-
 
                 navigate('/')
                 

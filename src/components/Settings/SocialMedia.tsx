@@ -16,12 +16,19 @@ const SocialMedia = () => {
     const {data: dataRedes, isLoading: isLoadingPymeRed} = useGetRedPyme();
     const {data: dataRed, isLoading: isLoadingDataRed} = useGetTipoRedPyme();
     return (
-        <Box>
+        <Box
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: '0.4rem'
+            }}
+        >
             <Box
                 sx={{
                     display: 'flex',
                     flexDirection: 'row',
-                    alignItems: 'center'
+                    alignItems: 'center',
+
                 }}
             >
                 <Typography variant={"h6"}>

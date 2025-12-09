@@ -130,7 +130,7 @@ const NomPymeComponent = ({ nombre_pyme }: componentType) => {
             </Dialog>
 
             <ErrorDialog
-                title="Errores al Registrarse"
+                title="Errores al Modificar nombre de la pyme"
                 content="Por favor corrija los siguientes errores"
                 errors={errorMessages}
                 open={openErrorDialog}

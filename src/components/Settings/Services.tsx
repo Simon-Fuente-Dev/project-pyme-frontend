@@ -8,8 +8,10 @@ export const Services = () => {
     const {data: dataSubServPyme} = useGetSubServPyme()
     return (
         <>
-            <Box sx={{display: 'flex', gap: '2rem', flexDirection: 'column'}}>
-                <Box>
+            <Box sx={{display: 'flex', gap: '1rem', flexDirection: 'column'}}>
+                <Box
+                    sx={{display: 'flex', gap: '0.4rem', flexDirection: 'column'}}
+                >
 
                     <Typography variant={"h6"}>Tipo de Servicio de la pyme </Typography>
 
@@ -33,7 +35,9 @@ export const Services = () => {
                     )}
 
                 </Box>
-                <Box>
+                <Box
+                    sx={{display: 'flex', gap: '0.4rem', flexDirection: 'column'}}
+                >
                     <Typography variant={"h6"}>Sub Servicios </Typography>
                     {dataSubServPyme != null && dataSubServPyme.length > 0 && (
                         <Box
