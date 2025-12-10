@@ -53,15 +53,16 @@ const WinAgregarModificar = ({title, accion, productData, open, setOpen}: WinPro
 
 
 
+
     const icon = accion === "agregar" ? <AddIcon color={colorIcon}/> : <DriveFileRenameOutlineIcon color={colorIcon}/>;
     // const [tipoItem, setTipoItem] = useState();
-    const {control, handleSubmit, watch, formState: {errors}, reset} = useForm<Producto>({
+    const {control, handleSubmit, watch, formState: {errors}, reset, setValue} = useForm<Producto>({
         defaultValues: {
-            id: productData?.id ?? 0,
+            id: productData?.id_item ?? 0,
             nombre: productData?.nombre ?? "",
-            descripcion: productData?.descripcion ?? "",
-            tipoItem: productData?.idTipo,
-            tipoServicio: 0,
+            descripcion: productData?.desc_item ?? "",
+            tipoItem: productData?.id_tipo_item ?? 0,
+            tipoServicio: productData?.id_sub_servicio,
             precio: productData?.precio ?? 0,
             duracion_min: productData?.duracion_min ?? 0,
             duracion_max: productData?.duracion_max ?? 0
@@ -73,11 +74,11 @@ const WinAgregarModificar = ({title, accion, productData, open, setOpen}: WinPro
         switch (accion) {
             case "modificar" :
                 reset({
-                    id: productData?.id ?? 0,
+                    id: productData?.id_item ?? 0,
                     nombre: productData?.nombre ?? "",
-                    descripcion: productData?.descripcion ?? "",
-                    tipoItem: productData?.idTipo,
-                    tipoServicio: 0,
+                    descripcion: productData?.desc_item ?? "",
+                    tipoItem: productData?.id_tipo_item ?? 0,
+                    tipoServicio: productData?.id_sub_servicio,
                     precio: productData?.precio ?? 0,
                     duracion_min: productData?.duracion_min ?? 0,
                     duracion_max: productData?.duracion_max ?? 0
@@ -88,7 +89,7 @@ const WinAgregarModificar = ({title, accion, productData, open, setOpen}: WinPro
                     id: 0,
                     nombre: "",
                     descripcion: "",
-                    tipoItem: productData?.idTipo,
+                    tipoItem: 0,
                     tipoServicio: 0,
                     precio: 0,
                     duracion_min: 0,
@@ -100,6 +101,14 @@ const WinAgregarModificar = ({title, accion, productData, open, setOpen}: WinPro
     }, [productData, accion, reset])
 
     const tipoItem = watch("tipoItem");
+
+    useEffect(() => {
+        if(tipoItem == 1) {
+            setValue("duracion_min", 0)
+            setValue("duracion_max", 0)
+        }
+
+    }, [tipoItem]);
 
 
     const onSubmit = (data: Producto) => {

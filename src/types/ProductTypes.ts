@@ -6,7 +6,9 @@ export interface Producto {
     nombre: string;
     descripcion: string;
     tipoItem: number;
+    descTipoItem: string;
     tipoServicio: number;
+    descTipoServicio: string;
     precio: number;
     duracion_min: number;
     duracion_max: number;

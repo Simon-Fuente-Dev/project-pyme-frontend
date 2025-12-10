@@ -13,5 +13,8 @@ export const useAddEditItem = () => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: addEditItem,
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ['itemPyme']});
+        }
     })
 }

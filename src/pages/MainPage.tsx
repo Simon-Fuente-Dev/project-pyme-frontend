@@ -60,12 +60,12 @@ const MainPage = () => {
 
             </div>
             <div className="div5">
-                <BentoCard
-                    title="Ultimos Comentarios"
-                    icon={<CommentIcon sx={{fontSize: 'inherit'}}/>}
-                    colorIcon="#FF8000">
-                    <LastCommentCard />
-                </BentoCard>
+                {/*<BentoCard*/}
+                {/*    title="Ultimos Comentarios"*/}
+                {/*    icon={<CommentIcon sx={{fontSize: 'inherit'}}/>}*/}
+                {/*    colorIcon="#FF8000">*/}
+                {/*    <LastCommentCard />*/}
+                {/*</BentoCard>*/}
 
             </div>
         </div>
