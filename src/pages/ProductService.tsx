@@ -30,6 +30,7 @@ import type {
 import {useGetItemPyme} from "../api/Item/useGetItemPyme.ts";
 import {validarCarga} from "../utils/ValidaCarga.ts";
 import ConfirmDialog from "../components/Rehusable/ConfirmDialog.tsx";
+import {useDeleteItem} from "../api/Item/useEliminarItem.ts";
 
 
 type Data = ProductoConHistorial;
@@ -84,6 +85,21 @@ function Row(props: {
     const [open, setOpen] = useState(false);
     const [openConfirm, setOpenConfirm] = useState(false);
     const [content, setContent] = useState("");
+
+    const {mutate} = useDeleteItem();
+
+    const deleteItem = (id: number) => {
+        const body = {
+            id_item: id
+        }
+        mutate(body, {
+            onSuccess: (response) => {
+                console.log(response);
+            }
+        })
+    }
+
+
     const {
         id_item,
         nombre,
@@ -187,7 +203,7 @@ function Row(props: {
                 content={content}
                 confirmText={"Eliminar"}
                 onClose={() => setOpenConfirm(false)}
-                onConfirm={() => console.log("eliminado")}/>
+                onConfirm={() => deleteItem(id_item)}/>
         </>
 
     )
