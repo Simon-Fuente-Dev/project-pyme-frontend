@@ -1,69 +1,24 @@
-# React + TypeScript + Vite
+Pocket Pyme - Frontend 🚀
+Pocket Pyme es una plataforma web diseñada para digitalizar y potenciar el crecimiento de pequeñas y medianas empresas. Este frontend proporciona una interfaz intuitiva para que los emprendedores gestionen su catálogo, editen su información de contacto y capturen nuevos clientes de manera eficiente.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+📋 Características Principales
+Registro de Empresas: Flujo de onboarding para que nuevas pymes se integren a la plataforma.
 
-Currently, two official plugins are available:
+Catálogo de Productos y Servicios: Panel administrativo para agregar, editar y listar la oferta comercial.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Perfil de Contacto: Herramientas de edición para actualizar datos de contacto y mejorar la captación de leads.
 
-## Expanding the ESLint configuration
+Dashboard Moderno: Interfaz limpia y funcional basada en estándares de diseño profesionales.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+🛠️ Stack Tecnológico
+El proyecto utiliza un stack moderno para garantizar escalabilidad y una excelente experiencia de usuario:
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Core: React (Functional Components & Hooks).
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+Lenguaje: TypeScript para un tipado fuerte y desarrollo seguro.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Interfaz de Usuario: Material UI (MUI) para componentes consistentes y responsivos.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Gestión de Estado: Context API / Redux (según corresponda).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Consumo de API: Axios / Fetch.
